@@ -14,7 +14,7 @@ export function CurrentYear() {
         setYear(now.getFullYear());
     }, []);
 
-    return <span><span>{year}</span> Swag Store. All rights</span>;
+    return <span><span>{year}</span> Swag Store. All rights reserved.</span>;
 }
 
 
@@ -26,7 +26,6 @@ export function Footer() {
                     <Suspense fallback={<span className="inline-block h-4 w-8 bg-muted/50 rounded" />}>
                         <CurrentYear /> 
                     </Suspense>
-					reserved.
 				</span>
 				<nav className="flex items-center gap-1">
 					<Button variant="ghost" size="sm" asChild>
