@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { HeroSection } from "@/components/homePage/hero-section";
-import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
 import { FeaturedProducts, FeaturedProductsSkeleton } from "@/components/homePage/featured-products";
 
 export const metadata: Metadata = {
