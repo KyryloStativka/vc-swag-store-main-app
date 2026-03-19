@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { CartBadge } from "@/components/cart/cart-badge";
 import { Button } from "@/components/ui/button";
+import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
 
 export function Header() {
 	return (
@@ -32,6 +33,9 @@ export function Header() {
 					</Link>
 				</Button>
 			</div>
+			<Suspense fallback={<PromoBannerSkeleton />}>
+				<PromoBanner />
+			</Suspense>
 		</header>
 	);
 }
