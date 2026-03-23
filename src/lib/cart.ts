@@ -33,8 +33,15 @@ export async function createCart(): Promise<string> {
         return existingToken;
     }
 
-    const response = await apiPost<{ cartId: string, token: string }>('/cart/create', {});
-    const token = response.data?.token;
+    const response = await fetch(`${process.env.SWAG_API_BASE_URL}/cart/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-vercel-protection-bypass': process.env.SWAG_API_TOKEN ?? '',
+        },
+    });
+
+    const token = response.headers.get('x-cart-token');
 
     if (token) {
         await setCartToken(token);
