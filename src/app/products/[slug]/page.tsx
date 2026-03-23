@@ -1,4 +1,4 @@
-import {getProductBySlug, getProductStock} from "@/lib/products";
+import {getProductBySlug, getProductStock, getProducts} from "@/lib/products";
 import type { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
@@ -6,6 +6,15 @@ import { TagsHolder } from "@/components/products/tags";
 import { Suspense } from "react";
 import { AddToCartForm } from "@/components/products/add-to-cart-form";
 import { notFound } from "next/navigation";
+
+// Pre-renders all product pages at build time
+export async function generateStaticParams  () {
+  const products = await getProducts(1, 100); // Fetch first 100 products for static generation
+  return products.products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
@@ -19,7 +28,7 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
     const { slug } = await params;
     const product = await getProductBySlug(slug);
     if (!product) notFound();
-
+    
   return (
     <div className="container mx-auto py-12 px-4 md:px-0 flex flex-row flex-wrap">
         <div className="w-full md:w-1/2 flex center justify-center">
@@ -36,24 +45,41 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
             <p className="italic">Slug: {product.slug}</p>
             <TagsHolder product={product} className="my-2"/>
             <p className="max-w-xl">{product.description}</p>
-            <div className="flex flex-row items-center my-4 gap-6">
-                <p className="font-bold text-2xl">Price: {formatPrice(product.price, product.currency)}</p>
-                <StockDisplay slug={product.slug} />
-            </div>
-             <StockAndCart product={product} />
+            <Suspense fallback={<StockAddToCartSkeleton />}>
+                <StockAndCart product={product} />
+            </Suspense>
+
         </div>
     </div>
   );
 }
 
-async function StockDisplay({ slug }: { slug: string }) {
-    const stock = await getProductStock(slug);
-    return <p className="font-bold text-2xl">Stock: {stock.stock}</p>;
-}
 
 async function StockAndCart({ product }: { product: Product }) {
     const stock = await getProductStock(product.slug);
-    return <AddToCartForm productId={product.id} productName={product.name} productStock={stock} />;
+    return <>
+            <div className="flex flex-row items-center my-4 gap-6">
+                <p className="font-bold text-2xl">Price: {formatPrice(product.price, product.currency)}</p>
+               <p className="font-bold text-2xl">Stock: {stock.stock}</p>
+            </div>
+            <AddToCartForm productId={product.id} productName={product.name} productStock={stock} />
+        </>;
+}
+
+function StockAddToCartSkeleton () {
+    return (
+        <div className="flex flex-row items-center my-4 gap-6 animate-pulse">
+            <div>
+                <div className="h-8 w-32 bg-gray-300 mb-3 rounded" />
+                <div className="h-8 w-24 bg-gray-300 rounded" />
+            </div>
+            <div>
+                 <div className="h-8 w-36 bg-gray-300 mb-3 rounded" />
+                <div className="h-8 w-16 bg-gray-300 rounded" />
+            </div>
+           
+        </div>
+    );
 }
 
 function ProductSkeletonLoading() {

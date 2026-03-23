@@ -10,7 +10,7 @@ export async function getCartToken(): Promise<string> {
 
 export async function setCartToken(token: string): Promise<void> {
     const cookieStore = await cookies();
-    cookieStore.set('cartToken', token, { path: '/', maxAge: 60 * 60 * 24 }); // Expires in 1 day
+    cookieStore.set('cartToken', token, { path: '/', maxAge: 60 * 60 * 24, httpOnly: true }); // Expires in 1 day
 }
 
 export async function getCart(): Promise<Cart | null> {
