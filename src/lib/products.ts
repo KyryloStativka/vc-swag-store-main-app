@@ -31,3 +31,26 @@ export async function getPromoProducts() {
   const response = await apiGet<Product[]>('/products',{featured: 'true'});
   return response.data;
 }
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+    'use cache';
+    cacheTag(`products`);
+    cacheLife(`products`);
+    
+    const response = await apiGet<Product>(`/products/${slug}`);
+    return response.data ?? null;
+}
+
+export async function getProductsByIds(ids: string[]): Promise<Product[]> {
+    'use cache';
+    cacheTag(`products`);
+    cacheLife(`products`);
+    
+    const response = await apiGet<Product[]>('/products', { ids: ids.join(',') });
+    return response.data;
+}
+
+export async function getProductStock(productId: string): Promise<{ stock: number, inStock: boolean }> {
+    const response = await apiGet<{ stock: number, inStock: boolean }>(`/products/${productId}/stock`);
+    return {stock: response.data.stock, inStock: response.data.inStock};
+}
