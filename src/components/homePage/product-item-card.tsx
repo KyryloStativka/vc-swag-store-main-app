@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import type { Product } from "@/lib/types";
-
+import { formatPrice } from "@/lib/utils";
+import { TagsHolder } from "@/components/products/tags";
 
 export function ProductItemCard({ product }: { product: Product }) {
-    const priceHolder = new Intl.NumberFormat('en-US', { style: 'currency', currency: product.currency }).format(product.price / 100);
+    const priceHolder = formatPrice(product.price, product.currency);
   
 return (
     <div className="bg-white shadow rounded-lg p-4 flex flex-col">
@@ -17,16 +18,7 @@ return (
         className="w-full h-68 object-cover mb-4 rounded"
       />
       <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-      <div className="tags mb-auto">
-        {product.tags.map((tag) => (
-          <span
-            key={tag}
-            className="inline-block bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full mr-2 mb-2"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+    <TagsHolder product={product} />
       <p className="text-gray-700 mb-4">{priceHolder}</p> 
         <Link href={`/products/${product.slug}`}  className="mt-auto">
             <Button variant="default" size="lg" className="w-full mb-2">
