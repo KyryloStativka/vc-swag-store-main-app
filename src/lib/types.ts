@@ -37,6 +37,7 @@ export type Promotion = {
 };
 
 export type CartItem = {
+  id: string;
   productId: string;
   quantity: number;
   addedAt: string;
