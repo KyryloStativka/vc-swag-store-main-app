@@ -6,7 +6,7 @@ export function TagsHolder({ product, className = "" }: { product: Product, clas
             {product.tags.map((tag) => (
             <span
                 key={tag}
-                className="inline-block bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full mr-2 mb-2"
+                className="inline-block capitalize italic bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded-full mr-2 mb-2"
             >
                 {tag}
             </span>

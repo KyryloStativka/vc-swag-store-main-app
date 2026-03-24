@@ -12,6 +12,13 @@ export type Product = {
   createdAt: string;
 };
 
+export type QtyButtonProps = {
+  quantity: number;
+  setQuantity: (qty: number) => void;
+  stock?: number;       // optional — if provided, caps the + button
+  disabled?: boolean;   // for isPending from useTransition
+};
+
 export type StockInfo = {
   productId: string;
   stock: number;
@@ -37,7 +44,6 @@ export type Promotion = {
 };
 
 export type CartItem = {
-  id: string;
   productId: string;
   quantity: number;
   addedAt: string;
@@ -79,8 +85,19 @@ export type StoreConfig = {
   };
 };
 
-export type ApiResponse<T> = {
-  success: boolean;
-  data: T;
-  meta?: { pagination: PaginationMeta };
+export type ApiResponse<T> =
+  | { success: true; data: T; meta?: { pagination: PaginationMeta } }
+  | { success: false; error: { code: string; message: string; details?: unknown } };
+
+export type ActionResult<T = void> =
+  | { success: true; data?: T }
+  | { success: false; error: string; maxQty?: number };
+
+export type AddToCartRequest = {
+  productId: string;
+  quantity?: number;
+};
+
+export type UpdateCartItemRequest = {
+  quantity: number;
 };

@@ -44,7 +44,7 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
             <h1 className="text-3xl font-bold mb-4">Product Detail: {product.name}</h1>
             <p className="italic">Slug: {product.slug}</p>
             <TagsHolder product={product} className="my-2"/>
-            <p className="max-w-xl">{product.description}</p>
+            <p className="max-w-xl mt-1">{product.description}</p>
             <Suspense fallback={<StockAddToCartSkeleton />}>
                 <StockAndCart product={product} />
             </Suspense>

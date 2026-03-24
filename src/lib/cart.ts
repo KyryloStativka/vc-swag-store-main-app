@@ -1,5 +1,5 @@
 import 'server-only';
-import { apiPost, apiGet } from './api-client';
+import { apiGet } from './api-client';
 import { cookies } from 'next/headers';
 import type { Cart } from './types';
 
@@ -19,7 +19,7 @@ export async function getCart(): Promise<Cart | null> {
 
     try {
         const response = await apiGet<Cart>('/cart', undefined, { cartToken });
-        return response.data;
+        return response.success ? response.data : null;
     } catch (error) {
         console.error('Error fetching cart:', error);
         return null;

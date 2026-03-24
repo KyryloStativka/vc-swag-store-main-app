@@ -1,5 +1,6 @@
 import { getPromoProducts } from '@/lib/products';
 import { ProductItemCard } from './product-item-card';
+import type { Product } from '@/lib/types';
 
 export async function FeaturedProducts() {
     const productsData = await getPromoProducts(); // Fetch first page with 8 products
@@ -13,7 +14,7 @@ export async function FeaturedProducts() {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12">Featured Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {productsData.map((product) => (
+          {productsData.map((product: Product) => (
             <ProductItemCard key={product.id} product={product} />
           ))}
         </div>

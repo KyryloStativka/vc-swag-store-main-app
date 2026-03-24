@@ -20,7 +20,7 @@ export async function getProducts(
     if (search) params.search = search;
     
     const response = await apiGet<Product[]>('/products', params);
-    return { products: response.data, meta: response.meta?.pagination ?? {} as PaginationMeta };
+    return { products: response.success ? response.data : [], meta: response.success ? response.meta?.pagination ?? {} as PaginationMeta : {} as PaginationMeta };
 }
 
 export async function getPromoProducts() {
@@ -29,7 +29,7 @@ export async function getPromoProducts() {
   cacheLife('promoProducts');
   
   const response = await apiGet<Product[]>('/products',{featured: 'true'});
-  return response.data;
+  return response.success ? response.data : [];
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -38,7 +38,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     cacheLife(`products`);
     
     const response = await apiGet<Product>(`/products/${slug}`);
-    return response.data ?? null;
+    return response.success ? response.data : null;
 }
 
 export async function getProductsByIds(ids: string[]): Promise<Product[]> {
@@ -47,10 +47,10 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
     cacheLife(`products`);
     
     const response = await apiGet<Product[]>('/products', { ids: ids.join(',') });
-    return response.data;
+    return response.success ? response.data : [];
 }
 
 export async function getProductStock(productId: string): Promise<{ stock: number, inStock: boolean }> {
     const response = await apiGet<{ stock: number, inStock: boolean }>(`/products/${productId}/stock`);
-    return {stock: response.data.stock, inStock: response.data.inStock};
+    return response.success ? response.data : { stock: 0, inStock: false };
 }

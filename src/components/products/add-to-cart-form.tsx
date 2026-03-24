@@ -4,6 +4,7 @@ import { Spinner } from "../ui/spinner";
 import { useState, useTransition } from "react";
 import {addToCart} from "@/app/actions/cart";
 import {toast} from "sonner";
+import { QtyButton } from "./qty-button";
 
 
 export function AddToCartForm({ productId, productName, productStock }: { productId: string, productName: string, productStock: { stock: number, inStock: boolean } }) {
@@ -25,24 +26,8 @@ export function AddToCartForm({ productId, productName, productStock }: { produc
 
     return (
         <form className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-                <label htmlFor="quantity" className="text-sm font-medium text-gray-700">Qty:</label>
-                <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    min="1"
-                    max={productStock.stock}
-                    value={quantity}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(e) =>{ 
-                        const value = e.target.value;
-                        if(value === '') return;
-                        setQuantity(Number(value));
-                        }
-                    }
-                    className="w-20 rounded-md px-3 border-b-primary text-sm shadow-sm ring-1"
-                />
+            <div className="flex items-center gap-3 flex-col sm:flex-row">
+                <QtyButton quantity={quantity} stock={productStock.stock} setQuantity={setQuantity} />
                 <Button
                     type="submit"
                     onClick={handleSubmit}
