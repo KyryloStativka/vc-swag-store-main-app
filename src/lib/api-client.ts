@@ -71,3 +71,16 @@ export async function apiDelete<T>(
   });
   return parseResponse<T>(res);
 }
+
+export async function apiPatch<T>(
+  path: string,
+  body: unknown,
+  options?: { cartToken?: string }
+): Promise<ApiResponse<T>> {
+  const res = await fetch(`${getBaseUrl()}${path}`, {
+    method: "PATCH",
+    headers: getBaseHeaders(options?.cartToken),
+    body: JSON.stringify(body),
+  });
+  return parseResponse<T>(res);
+}

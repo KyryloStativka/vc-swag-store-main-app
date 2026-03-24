@@ -10,5 +10,5 @@ export async function getPromotions(): Promise<Promotion | null> {
     cacheLife('promo');
     
     const response = await apiGet<Promotion>('/promotions');
-    return response.data ?? null;
+    return response.success ? response.data : null;
 }
