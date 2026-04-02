@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
       promoProducts: { stale: 300, revalidate: 900, expire: 3600 },
       promo:    { stale: 60,  revalidate: 120, expire: 300 },
       store:    { stale: 3600, revalidate: 86400, expire: 604800 },
+      searchProducts: { stale: 300, revalidate: 900, expire: 3600 },
+      categories: { stale: 3600, revalidate: 86400, expire: 604800 },
   },
   images: {
     remotePatterns: [

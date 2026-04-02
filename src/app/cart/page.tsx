@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { CartItemUpdate } from "@/components/cart/cart-item-update";
-import { CartItem } from "@/lib/types";
+import type { CartItem } from "@/lib/types";
 
 export default function CartPage() {
     return (
