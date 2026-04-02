@@ -13,7 +13,7 @@ export function HeroSection() {
           Stock up on t-shirts, hoodies, stickers, and more. Perfect for developers and fans alike.
         </p>
         <Link
-          href="/products"
+          href="#featured-products"
         >
             <Button variant="default" size="xl" className="px-6 text-lg"> 
                 Shop Now

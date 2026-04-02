@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 
 // Pre-renders all product pages at build time
 export async function generateStaticParams  () {
-  const products = await getProducts(1, 100); // Fetch first 100 products for static generation
+  const products = await getProducts('','',1, 100); // Fetch first 100 products for static generation
   return products.products.map((product) => ({
     slug: product.slug,
   }));

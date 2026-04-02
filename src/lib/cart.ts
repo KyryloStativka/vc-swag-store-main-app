@@ -1,4 +1,5 @@
 import 'server-only';
+import {cache} from 'react';
 import { apiGet } from './api-client';
 import { cookies } from 'next/headers';
 import type { Cart } from './types';
@@ -13,7 +14,8 @@ export async function setCartToken(token: string): Promise<void> {
     cookieStore.set('cartToken', token, { path: '/', maxAge: 60 * 60 * 24, httpOnly: true }); // Expires in 1 day
 }
 
-export async function getCart(): Promise<Cart | null> {
+// wrapping to React cache for not calling twice in one reqest
+export const getCart = cache(async function(): Promise<Cart | null> {
     const cartToken = await getCartToken();
     if (!cartToken) return null;
 
@@ -24,8 +26,7 @@ export async function getCart(): Promise<Cart | null> {
         console.error('Error fetching cart:', error);
         return null;
     }
-}
-
+});
 
 export async function createCart(): Promise<string> {
     const existingToken = await getCartToken();

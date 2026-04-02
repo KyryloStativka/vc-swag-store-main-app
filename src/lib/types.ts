@@ -80,9 +80,19 @@ export type StoreConfig = {
     discord?: string;
   };
   seo: {
-    title: string;
-    description: string;
+     defaultTitle: string;
+    titleTemplate: string;
+    defaultDescription: string;
   };
+};
+
+export type SearchPageProps = {
+  searchParams: {
+    page?: number;
+    limit?: number;
+    category?: string;
+    query?: string;
+  }
 };
 
 export type ApiResponse<T> =
@@ -100,4 +110,8 @@ export type AddToCartRequest = {
 
 export type UpdateCartItemRequest = {
   quantity: number;
+};
+
+export type ProductsSkeletonProps = {
+  count?: number;
 };

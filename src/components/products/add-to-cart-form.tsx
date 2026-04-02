@@ -5,9 +5,10 @@ import { useState, useTransition } from "react";
 import {addToCart} from "@/app/actions/cart";
 import {toast} from "sonner";
 import { QtyButton } from "./qty-button";
+import type { StockInfo } from "@/lib/types";
 
 
-export function AddToCartForm({ productId, productName, productStock }: { productId: string, productName: string, productStock: { stock: number, inStock: boolean } }) {
+export function AddToCartForm({ productId, productName, productStock }: { productId: string, productName: string, productStock: StockInfo }) {
     const [quantity, setQuantity] = useState(1);
     const [isPending, startTransition] = useTransition();
 
