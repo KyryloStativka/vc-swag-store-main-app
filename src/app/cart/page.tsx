@@ -5,6 +5,18 @@ import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { CartItemUpdate } from "@/components/cart/cart-item-update";
 import type { CartItem } from "@/lib/types";
+import { getBaseMetadata } from "@/lib/store";
+
+
+export  async function generateMetadata() {
+    const baseMetadata = await getBaseMetadata();
+    return {
+        ...baseMetadata,
+        title: "Your Shopping Cart",
+        description: "Review the items in your shopping cart and proceed to checkout."  
+};
+}
+
 
 export default function CartPage() {
     return (
@@ -15,12 +27,11 @@ export default function CartPage() {
                      <CartItems />
                 </Suspense>
              </div>
-             <div className="mt-4">
+             <div className="mt-6 flex justify-end">
                 <Suspense fallback={<div className="h-12 w-1/6 bg-gray-300 rounded animate-pulse ml-auto"></div>}>
                     <TotalAmount />
                 </Suspense>
              </div>
-
         </div>
     );
 }
@@ -36,7 +47,9 @@ export async function CartItems() {
             {cartData.items.map((item: CartItem) => (
                 <div key={item.product.id} className="border-b py-4 flex flex-row items-center gap-4">
                     <div className="item-img flex gap-4 items-center w-3/5">
-                        <Image src={item.product?.images[0] ?? "/placeholder.png"} alt={item.product.name} width={100} height={100} />
+                        <Link href={`/products/${item.product.slug}`} className="flex items-center gap-4 overflow-hidden">
+                            <Image src={item.product?.images[0] ?? "/placeholder.png"} className="hover:scale-105 transition-transform" alt={item.product.name} width={100} height={100} />
+                        </Link>
                         <div className="item-holder">
                             <Link href={`/products/${item.product.slug}`} className="text-primary font-bold hover:underline">
                                 {item.product.name}
@@ -60,16 +73,17 @@ export async function CartItems() {
 export async function TotalAmount() {
     const cartData = await getCart();
     if (!cartData || cartData.items.length === 0) {
-        return 0;
+        return ;
     }
      return (
         <div className="text-right">
-            <p className="text-xl font-bold">
+            <p className="text-2xl font-bold">
                 Total: {formatPrice(cartData.subtotal, cartData.currency)}
             </p>
         </div>
     );
 }
+
 
 export function CartItemsSkeleton() {
     return (

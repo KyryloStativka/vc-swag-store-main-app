@@ -87,12 +87,12 @@ export type StoreConfig = {
 };
 
 export type SearchPageProps = {
-  searchParams: {
-    page?: number;
-    limit?: number;
+  searchParams: Promise<{
+    page?: string;
+    limit?: string;
     category?: string;
     query?: string;
-  }
+  }>;
 };
 
 export type ApiResponse<T> =
@@ -114,4 +114,10 @@ export type UpdateCartItemRequest = {
 
 export type ProductsSkeletonProps = {
   count?: number;
+};
+
+export type CartContextType = {
+    isCartPending: boolean;
+    setCartPending: (pending: boolean) => void; // still used by CartItemUpdate
+    refreshCart: () => void;   
 };

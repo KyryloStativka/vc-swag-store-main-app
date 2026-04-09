@@ -2,28 +2,18 @@
 import { createCart, getCartToken } from "@/lib/cart";
 import { revalidatePath } from "next/cache";
 import { apiPatch, apiDelete , apiPost } from "@/lib/api-client";
-import { getProductStock } from "@/lib/products";
 import type { ActionResult } from "@/lib/types";
 
 
 export async function addToCart(productId: string, quantity: number): Promise<ActionResult<string>> {
     try {
-        const stockInfo = await getProductStock(productId);
-        if (!stockInfo.inStock) {
-            return { success: false, error: 'Product is out of stock.' };
-        }
-        if (quantity > stockInfo.stock) {
-            return { success: false, error: `Only ${stockInfo.stock} items left in stock.` };
-        }
-
-        const cartToken = await createCart();
-         await apiPost('/cart', {
+        const cartToken = await createCart()
+        await apiPost('/cart', {
             productId: productId,
             quantity: quantity
         }, { cartToken });
 
-        revalidatePath('/','layout');
-        revalidatePath('/products/[slug]', 'page');
+        // revalidatePath('/cart', 'page');
         
         return { success: true, data: cartToken };
     } catch (error) {
@@ -34,22 +24,14 @@ export async function addToCart(productId: string, quantity: number): Promise<Ac
 
 export async function updateCartItem(itemId: string, quantity: number): Promise<ActionResult> {
    try {
-        const cartToken = await getCartToken();
+       const cartToken = await getCartToken();
+
         if (!cartToken) {
             return { success: false, error: 'No cart found. Please add an item to the cart first.' };
         }
 
-        const stockInfo = await getProductStock(itemId);
-        if (!stockInfo.inStock) {
-            return { success: false, error: 'Product is out of stock.' };
-        }
-        if (quantity > stockInfo.stock) {
-            return { success: false, error: `Only ${stockInfo.stock} items left in stock.` };
-        }
-
         await apiPatch(`/cart/${itemId}`, { quantity }, { cartToken });
 
-        revalidatePath('/','layout');
         revalidatePath('/cart', 'page');
         
         return { success: true };
@@ -68,7 +50,6 @@ export async function removeCartItem(itemId: string):Promise<ActionResult> {
 
         await apiDelete(`/cart/${itemId}`, { cartToken });
 
-        revalidatePath('/','layout');
         revalidatePath('/cart', 'page');
         
         return { success: true };

@@ -6,6 +6,7 @@ import { TagsHolder } from "@/components/products/tags";
 import { Suspense } from "react";
 import { AddToCartForm } from "@/components/products/add-to-cart-form";
 import { notFound } from "next/navigation";
+import { getBaseMetadata } from "@/lib/store";
 
 // Pre-renders all product pages at build time
 export async function generateStaticParams  () {
@@ -15,6 +16,23 @@ export async function generateStaticParams  () {
   }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }>}) {
+    const baseMetadata = await getBaseMetadata();
+    const {slug} = await params;
+    const product = await getProductBySlug(slug);
+    if (!product) {
+        return {
+           ...baseMetadata,
+           title: "Product Not Found",
+           description: "The product you are looking for does not exist.",
+        };
+    }
+    return {
+        ...baseMetadata,
+        title: product.name,
+        description: product.description ? product.description.substring(0, 160) : `Buy ${product.name} at our store. Check out the details and add to cart!`,
+    };
+}
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
@@ -41,7 +59,7 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
             />
         </div>
         <div className="w-full md:w-1/2">
-            <h1 className="text-3xl font-bold mb-4">Product Detail: {product.name}</h1>
+            <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             <p className="italic">Slug: {product.slug}</p>
             <TagsHolder product={product} className="my-2"/>
             <p className="max-w-xl mt-1">{product.description}</p>

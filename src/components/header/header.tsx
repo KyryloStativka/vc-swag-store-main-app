@@ -4,11 +4,12 @@ import { Suspense } from "react";
 import { CartBadge } from "@/components/cart/cart-badge";
 import { Button } from "@/components/ui/button";
 import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
+import { CartBadgeWrapper } from "../cart/cart-badge-wrapper";
 
 export function Header() {
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<div className=" mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto flex h-14 items-center justify-between px-8 sm:px-6 lg:px-0">
 				<Link
 					href="/"
 					className="text-lg font-bold tracking-tight text-foreground"
@@ -26,10 +27,11 @@ export function Header() {
 				<Button variant="ghost" size="sm" asChild>
 					<Link href="/cart" className="relative">
 						<ShoppingCart className="size-4" />
-						Cart
-						<Suspense fallback={<span className="inline-block h-4 w-4" />}>
-							<CartBadge />
-						</Suspense>
+							<CartBadgeWrapper>
+								<Suspense fallback={<span className="inline-block h-4 w-4" />}>
+									<CartBadge />
+								</Suspense>
+							</CartBadgeWrapper>
 					</Link>
 				</Button>
 			</div>
