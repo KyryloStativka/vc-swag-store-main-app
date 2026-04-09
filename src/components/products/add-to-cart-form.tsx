@@ -38,11 +38,12 @@ export function AddToCartForm({ productId, productName, productStock }: { produc
 
     return (
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <div className="flex items-center gap-3 flex-col sm:flex-row">
+            <div className="flex items-start sm:items-center gap-3 flex-col sm:flex-row">
                 <QtyButton quantity={quantity} stock={productStock.stock} setQuantity={setQuantity} />
                 <Button
                     type="submit"
                     size="lg"
+                    className="w-full sm:w-auto"
                     disabled={isPending || !productStock.inStock || quantity > productStock.stock}
                 >
                     {isPending ? <>Adding to Cart <Spinner /></> : `Add to Cart`}

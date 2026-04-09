@@ -1,5 +1,5 @@
 import { getProducts } from "@/lib/products";
-import { ProductItemCard } from "@/components/homePage/product-item-card";
+import { ProductItemCard } from "@/components/home-page/product-item-card";
 import { Spinner } from "@/components/ui/spinner";
 
 

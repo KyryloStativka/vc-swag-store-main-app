@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { HeroSection } from "@/components/homePage/hero-section";
-import { FeaturedProducts, FeaturedProductsSkeleton } from "@/components/homePage/featured-products";
+import { HeroSection } from "@/components/home-page/hero-section";
+import { FeaturedProducts, FeaturedProductsSkeleton } from "@/components/home-page/featured-products";
 
 export const metadata: Metadata = {
   title: "Home",

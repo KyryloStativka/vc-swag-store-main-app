@@ -102,7 +102,7 @@ function StockAddToCartSkeleton () {
 
 function ProductSkeletonLoading() {
     return (
-        <div className="container mx-auto py-8 px-4 md:px-0 flex flex-row animate-pulse gap-4">
+        <div className="container mx-auto py-8 px-4 md:px-0 flex flex-col sm:flex-row animate-pulse gap-4">
             <div className="w-full md:w-1/2 flex center justify-center">
                 <div className="w-full max-w-[45rem] h-96 bg-gray-300 rounded mb-4" />
             </div>
