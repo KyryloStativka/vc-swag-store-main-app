@@ -1,10 +1,9 @@
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CartBadge } from "@/components/cart/cart-badge";
 import { Button } from "@/components/ui/button";
 import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
-import { CartBadgeWrapper } from "../cart/cart-badge-wrapper";
+import { HeaderCartButton } from "./header-cart-button";
 
 export function Header() {
 	return (
@@ -24,16 +23,11 @@ export function Header() {
 						<Link href="/search">Search</Link>
 					</Button>
 				</nav>
-				<Button variant="ghost" size="sm" asChild>
-					<Link href="/cart" className="relative">
-						<ShoppingCart className="size-4" />
-							<CartBadgeWrapper>
-								<Suspense fallback={<span className="inline-block h-4 w-4" />}>
-									<CartBadge />
-								</Suspense>
-							</CartBadgeWrapper>
-					</Link>
-				</Button>
+				<Suspense fallback={
+					<HeaderCartButton badge={<div className="h-4 w-4 rounded-full bg-gray-300 animate-pulse" />} />
+				}>
+					<HeaderCartButton badge={<CartBadge />} />
+				</Suspense>
 			</div>
 			<Suspense fallback={<PromoBannerSkeleton />}>
 				<PromoBanner />

@@ -1,6 +1,6 @@
 'use client';
-import { useCart } from "./cart-context";
-import { Spinner } from "../ui/spinner";
+import { useCart } from "@/components/cart/cart-context";
+import { Spinner } from "@/components/ui/spinner";
 
 export function CartBadgeWrapper({children}: {children: React.ReactNode}) {
     const { isCartPending } = useCart();

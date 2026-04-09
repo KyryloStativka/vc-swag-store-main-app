@@ -1,7 +1,7 @@
 
 import { Suspense } from "react";
-import { FooterLinks } from "./footer-links";
-import { CurrentYear } from "./footer-copy-right";
+import { FooterLinks } from "@/components/footer/footer-links";
+import { CurrentYear } from "@/components/footer/footer-copy-right";
 
 export function Footer() {
 	return (

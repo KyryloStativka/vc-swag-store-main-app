@@ -1,13 +1,13 @@
 'use client';
-import { Button } from "../ui/button";
-import { Spinner } from "../ui/spinner";
-import { useState, useEffect, useActionState } from "react";
+
+import { useState } from "react";
 import { addToCart } from "@/app/actions/cart";
 import { toast } from "sonner";
-import { QtyButton } from "./qty-button";
+import { QtyButton } from "@/components/products/qty-button";
 import type { StockInfo, ActionResult } from "@/lib/types";
 import { useCart } from "@/components/cart/cart-context";
-
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 export function AddToCartForm({ productId, productName, productStock }: { productId: string, productName: string, productStock: StockInfo }) {
     const [quantity, setQuantity] = useState(1);

@@ -12,8 +12,6 @@ export async function addToCart(productId: string, quantity: number): Promise<Ac
             productId: productId,
             quantity: quantity
         }, { cartToken });
-
-        // revalidatePath('/cart', 'page');
         
         return { success: true, data: cartToken };
     } catch (error) {

@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { useState, useEffect, useRef, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Spinner } from "../ui/spinner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 
 
 export function SearchForm({ initQuery = "" }: { initQuery?: string }) {

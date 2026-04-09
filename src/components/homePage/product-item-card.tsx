@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import type { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
 import { TagsHolder } from "@/components/products/tags";

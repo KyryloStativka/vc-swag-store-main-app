@@ -120,4 +120,6 @@ export type CartContextType = {
     isCartPending: boolean;
     setCartPending: (pending: boolean) => void; // still used by CartItemUpdate
     refreshCart: () => void;   
+    isMiniCartOpen: boolean;
+    setMiniCartOpen: (open: boolean) => void;
 };
