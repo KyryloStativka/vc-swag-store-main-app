@@ -13,9 +13,9 @@ export async function CartItems() {
         return <p className="text-gray-600">Your cart is currently empty.</p>;
     }
     return (
-        <div>
+        <div className="cart-items-holder overflow-scroll max-h-3/4-screen">
             {cartData.items.map((item: CartItem) => (
-                <div key={item.product.id} className="border-b p-4 flex flex-col gap-4 last-gap-0">
+                <div key={item.product.id} className="border-b p-4 flex flex-col gap-4 last-gap-0 last:border-0">
                     <div className="item-img flex gap-4 items-center">
                         <Link href={`/products/${item.product.slug}`} className="flex items-center gap-4 overflow-hidden">
                             <Image src={item.product?.images[0] ?? "/placeholder.png"} className="hover:scale-105 transition-transform" alt={item.product.name} width={100} height={100} />
@@ -46,7 +46,7 @@ export async function TotalAmount() {
         return ;
     }
      return (
-        <div className="text-left p-4">
+        <div className="text-left border-t p-4">
             <p className="text-2xl mt-0 flex items-center gap-2">
              Total:<span className="font-bold text-3xl ml-auto"> {formatPrice(cartData.subtotal, cartData.currency)}</span>
             </p>
