@@ -3,7 +3,7 @@ import { SearchResultHolder } from "@/components/search/search-result-holder";
 import { CategorySidebar } from "@/components/search/category-sidebar";
 import { Suspense } from "react";
 import { getCategories } from "@/lib/products";
-import { FeaturedProductsSkeleton } from "@/components/homePage/featured-products";
+import { FeaturedProductsSkeleton } from "@/components/home-page/featured-products";
 import { getBaseMetadata } from "@/lib/store";
 
 import type { SearchPageProps } from "@/lib/types";

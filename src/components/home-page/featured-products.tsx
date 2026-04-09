@@ -1,5 +1,5 @@
 import { getPromoProducts } from '@/lib/products';
-import { ProductItemCard } from '@/components/homePage/product-item-card';
+import { ProductItemCard } from '@/components/home-page/product-item-card';
 import type { Product, ProductsSkeletonProps } from '@/lib/types';
 
 export async function FeaturedProducts() {

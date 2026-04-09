@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { CartBadge } from "@/components/cart/cart-badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
+import { PromoBanner, PromoBannerSkeleton } from "@/components/home-page/promo-banner";
 import { HeaderCartButton } from "./header-cart-button";
 
 export function Header() {
