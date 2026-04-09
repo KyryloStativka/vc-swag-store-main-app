@@ -5,6 +5,9 @@ import { Header } from "@/components/header/header";
 import { Toaster } from "@/components/ui/sonner";
 import { getBaseMetadata } from "@/lib/store";
 import { CartProvider } from "@/components/cart/cart-context";
+import { MiniCart } from "@/components/cart/mini-cart";
+import { CartItems, TotalAmount, CartItemsSkeleton } from "@/components/cart/cart-items";
+import { Suspense } from "react";
 
 import "./globals.css";
 
@@ -38,6 +41,14 @@ export default function RootLayout({
 					{children}
 					<Footer />
 					<Toaster position="bottom-right" />
+					<MiniCart>
+						<Suspense fallback={<CartItemsSkeleton />}>
+							<CartItems />
+						</Suspense>
+						<Suspense fallback={null}>
+							<TotalAmount />
+						</Suspense>
+						</MiniCart>
 				</CartProvider>
 			</body>
 		</html>

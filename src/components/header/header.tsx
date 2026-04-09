@@ -1,10 +1,10 @@
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CartBadge } from "@/components/cart/cart-badge";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { PromoBanner, PromoBannerSkeleton } from "@/components/homePage/promo-banner";
-import { CartBadgeWrapper } from "../cart/cart-badge-wrapper";
+import { HeaderCartButton } from "./header-cart-button";
 
 export function Header() {
 	return (
@@ -24,16 +24,11 @@ export function Header() {
 						<Link href="/search">Search</Link>
 					</Button>
 				</nav>
-				<Button variant="ghost" size="sm" asChild>
-					<Link href="/cart" className="relative">
-						<ShoppingCart className="size-4" />
-							<CartBadgeWrapper>
-								<Suspense fallback={<span className="inline-block h-4 w-4" />}>
-									<CartBadge />
-								</Suspense>
-							</CartBadgeWrapper>
-					</Link>
-				</Button>
+				<Suspense fallback={
+					<HeaderCartButton badge={<Spinner className="absolute -top-1 -right-[5px] size-5 rounded-full border-1 border-primary p-0 flex items-center justify-center text-xs" />} />
+				}>
+					<HeaderCartButton badge={<CartBadge />} />
+				</Suspense>
 			</div>
 			<Suspense fallback={<PromoBannerSkeleton />}>
 				<PromoBanner />

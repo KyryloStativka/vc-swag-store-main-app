@@ -1,6 +1,6 @@
 import { getProducts } from "@/lib/products";
-import { ProductItemCard } from "../homePage/product-item-card";
-import { Spinner } from "../ui/spinner";
+import { ProductItemCard } from "@/components/homePage/product-item-card";
+import { Spinner } from "@/components/ui/spinner";
 
 
 export async function SearchResultHolder({ query, category }: { query: string, category?: string }) {    

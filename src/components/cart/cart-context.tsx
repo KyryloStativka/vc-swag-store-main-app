@@ -7,12 +7,15 @@ import type { CartContextType } from "@/lib/types";
 const CartContext = createContext<CartContextType>({
     isCartPending: false,
     setCartPending: () => {},
-    refreshCart: () => {}
+    refreshCart: () => {},
+    isMiniCartOpen: false,
+    setMiniCartOpen: () => {},
 });
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [manualPending, setCartPending] = useState(false);
     const [transitionPending, startCartTransition] = useTransition();
+    const [isMiniCartOpen, setMiniCartOpen] = useState(false);
     const router = useRouter();
 
     function refreshCart() {
@@ -22,7 +25,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <CartContext.Provider value={{ isCartPending: manualPending || transitionPending, setCartPending, refreshCart }}>
+        <CartContext.Provider value={{ isCartPending: manualPending || transitionPending, setCartPending, refreshCart, isMiniCartOpen, setMiniCartOpen }}>
             {children}
         </CartContext.Provider>
     );

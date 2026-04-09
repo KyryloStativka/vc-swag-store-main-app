@@ -1,6 +1,6 @@
 import type { Category } from "@/lib/types";
 import Link from "next/link";
-import { CloseIcon } from "../customIcons/closeIcon";
+import { CloseIcon } from "@/components/customIcons/closeIcon";
 
 export function CategorySidebar({ categories, currentCategory }: { categories: Category[], currentCategory?: string }) {
 

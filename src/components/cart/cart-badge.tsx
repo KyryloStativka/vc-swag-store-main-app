@@ -1,7 +1,6 @@
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { getCart } from "@/lib/cart";
 
-// TODO: api/cart => functionality to get cart count
 export async function CartBadge() {
 	const cartData = await getCart();
 	const count = cartData?.totalItems || 0;

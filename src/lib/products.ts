@@ -36,16 +36,6 @@ export async function getProductStock(productId: string): Promise<StockInfo> {
     return response.success ? response.data : { productId, stock: 0, inStock: false, lowStock: false };
 }
 
-// export async function searchProducts(query?: string): Promise<Product[]> {
-//     'use cache';
-//     cacheTag('searchProducts');
-//     cacheLife('searchProducts');
-    
-//     // Placeholder for search functionality, currently returns all products
-//     const response = await apiGet<Product[]>('/products' , query ? { search: query } : undefined);
-//     return response.success ? response.data : [];
-// }
-
 export async function getCategories(): Promise<Category[]> {
     'use cache';
     cacheTag('categories');

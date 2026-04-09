@@ -1,13 +1,15 @@
 'use client';
+
 import { QtyButton } from "../products/qty-button";
 import { updateCartItem, removeCartItem } from "@/app/actions/cart";
 import { useOptimistic, useTransition, useEffect } from "react";
 import { Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
-import { toast } from "sonner";
-import { Spinner } from "../ui/spinner";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import type { CartItem } from "@/lib/types";
 import { useCart } from "@/components/cart/cart-context";
+import { toast } from "sonner";
+
 
 export function CartItemUpdate({ item }: { item: CartItem }) {
     const [isPending, startTransition] = useTransition();
@@ -53,7 +55,7 @@ export function CartItemUpdate({ item }: { item: CartItem }) {
     }
 
     return (
-        <div className="qty-holder ml-auto flex items-center">
+        <div className="qty-holder flex items-center">
             <QtyButton quantity={quantity} setQuantity={(newQty) => {
                 handleQtyChange(newQty);
             }} 

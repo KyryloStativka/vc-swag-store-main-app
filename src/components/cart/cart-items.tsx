@@ -1,40 +1,10 @@
-import { getCart } from "@/lib/cart";
-import { Suspense } from "react";
+import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import { formatPrice } from "@/lib/utils";
 import { CartItemUpdate } from "@/components/cart/cart-item-update";
 import type { CartItem } from "@/lib/types";
-import { getBaseMetadata } from "@/lib/store";
+import { getCart } from "@/lib/cart";
 
-
-export  async function generateMetadata() {
-    const baseMetadata = await getBaseMetadata();
-    return {
-        ...baseMetadata,
-        title: "Your Shopping Cart",
-        description: "Review the items in your shopping cart and proceed to checkout."  
-};
-}
-
-
-export default function CartPage() {
-    return (
-        <div className="container mx-auto py-12 px-4 md:px-0">
-            <h1 className="text-3xl font-bold mb-4">Your Shopping Cart</h1>
-             <div className="bg-white shadow rounded p-6">
-                <Suspense fallback={<CartItemsSkeleton />}>
-                     <CartItems />
-                </Suspense>
-             </div>
-             <div className="mt-6 flex justify-end">
-                <Suspense fallback={<div className="h-12 w-1/6 bg-gray-300 rounded animate-pulse ml-auto"></div>}>
-                    <TotalAmount />
-                </Suspense>
-             </div>
-        </div>
-    );
-}
 
 export async function CartItems() {
     const cartData = await getCart();
@@ -43,10 +13,10 @@ export async function CartItems() {
         return <p className="text-gray-600">Your cart is currently empty.</p>;
     }
     return (
-        <div>
+        <div className="cart-items-holder overflow-scroll max-h-3/4-screen">
             {cartData.items.map((item: CartItem) => (
-                <div key={item.product.id} className="border-b py-4 flex flex-row items-center gap-4">
-                    <div className="item-img flex gap-4 items-center w-3/5">
+                <div key={item.product.id} className="border-b p-4 flex flex-col gap-4 last-gap-0 last:border-0">
+                    <div className="item-img flex gap-4 items-center">
                         <Link href={`/products/${item.product.slug}`} className="flex items-center gap-4 overflow-hidden">
                             <Image src={item.product?.images[0] ?? "/placeholder.png"} className="hover:scale-105 transition-transform" alt={item.product.name} width={100} height={100} />
                         </Link>
@@ -57,10 +27,10 @@ export async function CartItems() {
                             <p>Quantity: {item.quantity}</p>
                         </div>
                     </div>
-                    <div className="qty-holder ml-auto w-1/5">
+                    <div className="qty-holder w-full flex items-center justify-center">
                         <CartItemUpdate item={item} />
                     </div>
-                    <div className="price-holder ml-auto text-right w-1/5">
+                    <div className="price-holder text-right">
                         <p className="font-bold text-xl">{formatPrice(item.product.price, item.product.currency)}</p>
                         <p className="text-gray-600">Subtotal: {formatPrice(item.product.price * item.quantity, item.product.currency)}</p>
                     </div>
@@ -76,9 +46,9 @@ export async function TotalAmount() {
         return ;
     }
      return (
-        <div className="text-right">
-            <p className="text-2xl font-bold">
-                Total: {formatPrice(cartData.subtotal, cartData.currency)}
+        <div className="text-left border-t p-4">
+            <p className="text-2xl mt-0 flex items-center gap-2">
+             Total:<span className="font-bold text-3xl ml-auto"> {formatPrice(cartData.subtotal, cartData.currency)}</span>
             </p>
         </div>
     );

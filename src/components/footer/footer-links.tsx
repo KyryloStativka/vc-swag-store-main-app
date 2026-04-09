@@ -1,6 +1,6 @@
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { getStoreConfig } from "@/lib/store";  
+import { Button } from "@/components/ui/button";
 
 export async function FooterLinks() {
 	const config = await getStoreConfig();
