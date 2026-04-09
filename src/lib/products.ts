@@ -2,7 +2,7 @@ import 'server-only';
 import {cacheLife, cacheTag} from 'next/cache'
 import { apiGet } from './api-client';
 
-import type { Product, PaginationMeta, Category, SearchPageProps, StockInfo } from './types';
+import type { Product, Category, StockInfo } from './types';
 
 export async function getPromoProducts() {
   'use cache';
@@ -60,11 +60,15 @@ export async function getProducts(
     category?: string,
     page: number = 1,
     limit: number = 20
-): Promise<SearchPageProps & { products: Product[] }> {
+): Promise<{ products: Product[]; page: number; limit: number }> {
+    'use cache';
+    cacheTag('searchProducts');
+    cacheLife('searchProducts');
+
     const params: Record<string, string> = { page: page.toString(), limit: limit.toString() };
     if (query) params.search = query;
     if (category) params.category = category;
 
     const response = await apiGet<Product[]>('/products', params);
-    return response.success ? { products: response.data, searchParams: {page, limit}} : { products: [], searchParams: {page, limit}};
+    return response.success ? { products: response.data, page, limit} : { products: [], page, limit };
 }

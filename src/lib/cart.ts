@@ -4,10 +4,10 @@ import { apiGet } from './api-client';
 import { cookies } from 'next/headers';
 import type { Cart } from './types';
 
-export async function getCartToken(): Promise<string> {
+export const getCartToken = cache(async (): Promise<string> => {
     const cookieStore = await cookies();
     return cookieStore.get('cartToken')?.value || '';
-}
+});
 
 export async function setCartToken(token: string): Promise<void> {
     const cookieStore = await cookies();

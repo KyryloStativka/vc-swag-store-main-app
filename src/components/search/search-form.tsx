@@ -6,11 +6,13 @@ import { useState, useEffect, useRef, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "../ui/spinner";
 
+
 export function SearchForm({ initQuery = "" }: { initQuery?: string }) {
     const [query, setQuery] = useState(initQuery);
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Only sync from URL when navigating back/forward or external URL change
     useEffect(() => {
@@ -19,24 +21,35 @@ export function SearchForm({ initQuery = "" }: { initQuery?: string }) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
+        setQuery(value);
 
-        setQuery(value); // ← update display immediately on every keystroke
+        if (value.length > 0 && value.length < 3) return;
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+        }
 
-        startTransition(() => {
-            const params = new URLSearchParams(searchParams.toString());
+        debounceRef.current = setTimeout(() => {
+            startTransition(() => {
+                const params = new URLSearchParams(searchParams.toString());
 
-            if (value) {
-                params.set("query", value);
-            } else {
-                params.delete("query");
-            }
+                if (value) {
+                    params.set("query", value);
+                } else {
+                    params.delete("query");
+                }
 
-            router.replace(`/search?${params.toString()}`);
-        });
-    };
+                router.replace(`/search?${params.toString()}`);
+                });
+            }, 300);
+        };
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        if(debounceRef.current) {
+            clearTimeout(debounceRef.current);
+        }
 
         startTransition(() => {
             const params = new URLSearchParams(searchParams.toString());
@@ -54,10 +67,12 @@ export function SearchForm({ initQuery = "" }: { initQuery?: string }) {
             <Input
                 type="text"
                 value={query}
+                min={3}
+                minLength={3}
                 onChange={handleChange}
                 placeholder="Search products..."
             />
-            <Button type="submit" className="py-3 px-6"  disabled={!query.trim() || isPending}>
+            <Button type="submit" className="py-3 px-6"  disabled={query.trim().length < 3 || isPending}>
                 {isPending ? <Spinner /> : "Search"}
             </Button>
         </form>
