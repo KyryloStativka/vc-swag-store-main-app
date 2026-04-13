@@ -11,7 +11,7 @@ export async function SearchResultHolder({ searchParams }: Pick<SearchPageProps,
 
     if (products.length > 0) {
         return (
-            <div className="container mx-auto p-4 md:px-0">
+            <div className="w-full md:w-3/4 p-4 md:px-0">
                 <h2 className="text-2xl font-bold mb-4">Search Results for "{query}"</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {products.map((product) => (
@@ -22,7 +22,7 @@ export async function SearchResultHolder({ searchParams }: Pick<SearchPageProps,
         );
     } else {
         return (
-            <div className="container mx-auto p-4 md:px-0">
+            <div className="w-full md:w-3/4 p-4 md:px-0">
                 <h2 className="text-2xl font-bold mb-4">Search Results for: "{query}"</h2>
                 <p className="text-gray-700">No products found.</p>
             </div>

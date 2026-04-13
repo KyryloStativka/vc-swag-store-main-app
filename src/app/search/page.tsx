@@ -2,8 +2,8 @@ import { SearchForm } from "@/components/search/search-form";
 import { SearchResultHolder } from "@/components/search/search-result-holder";
 import { CategorySidebar } from "@/components/search/category-sidebar";
 import { Suspense } from "react";
-import { getCategories } from "@/lib/products";
 import { FeaturedProductsSkeleton } from "@/components/home-page/featured-products";
+import { getCategories } from "@/lib/products";
 import { getBaseMetadata } from "@/lib/store";
 
 import type { SearchPageProps } from "@/lib/types";
@@ -19,7 +19,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
         <Suspense fallback={<CategorySidebarSkeleton />}>
           <CategoriesSection searchParams={searchParams} />
         </Suspense>
-        <Suspense fallback={<FeaturedProductsSkeleton count={6} />}>
+        <Suspense fallback={<FeaturedProductsSkeleton count={6} classNameFrom="w-full md:w-3/4" />}>
           <SearchResultHolder searchParams={searchParams} />
         </Suspense>
       </div>

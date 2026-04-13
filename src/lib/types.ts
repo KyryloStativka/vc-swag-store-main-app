@@ -114,6 +114,7 @@ export type UpdateCartItemRequest = {
 
 export type ProductsSkeletonProps = {
   count?: number;
+  classNameFrom?: string;
 };
 
 export type CartContextType = {
