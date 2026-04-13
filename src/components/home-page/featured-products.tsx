@@ -23,9 +23,9 @@ export async function FeaturedProducts() {
   );
 }
 
-export function FeaturedProductsSkeleton({ count = 8 }: ProductsSkeletonProps) {
+export function FeaturedProductsSkeleton({ count = 8, classNameFrom}: ProductsSkeletonProps) {
   return (
-    <section className="bg-gray-100 py-12 animate-pulse">
+    <section className={`bg-gray-100 py-12 animate-pulsez ${classNameFrom ? classNameFrom : ''}`}>
       <div className="container mx-auto px-4">
         <div className="h-6 w-full max-w-56 bg-gray-300 mb-6"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
