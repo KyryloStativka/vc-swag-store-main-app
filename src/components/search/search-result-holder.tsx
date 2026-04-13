@@ -1,9 +1,11 @@
 import { getProducts } from "@/lib/products";
 import { ProductItemCard } from "@/components/home-page/product-item-card";
 import { Spinner } from "@/components/ui/spinner";
+import type { SearchPageProps } from "@/lib/types";
 
 
-export async function SearchResultHolder({ query, category }: { query: string, category?: string }) {    
+export async function SearchResultHolder({ searchParams }: Pick<SearchPageProps, 'searchParams'>) {    
+    const { query = '', category } = await searchParams;
     const { products } = await getProducts(query, category, 1, 20);
 
 
