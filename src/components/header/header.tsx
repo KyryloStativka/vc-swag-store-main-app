@@ -18,9 +18,6 @@ export function Header() {
 				</Link>
 				<nav className="flex gap-1 mr-auto ml-4">
 					<Button variant="ghost" size="sm" asChild>
-						<Link href="/">Home</Link>
-					</Button>
-					<Button variant="ghost" size="sm" asChild>
 						<Link href="/search">Search</Link>
 					</Button>
 				</nav>
