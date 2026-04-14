@@ -63,6 +63,7 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
             <p className="italic">Slug: {product.slug}</p>
             <TagsHolder product={product} className="my-2"/>
             <p className="max-w-xl mt-1">{product.description}</p>
+            <p className="font-bold text-2xl mt-4">Price: {formatPrice(product.price, product.currency)}</p>
             <Suspense fallback={<StockAddToCartSkeleton />}>
                 <StockAndCart product={product} />
             </Suspense>
@@ -76,9 +77,10 @@ async function ProductContent({ params }: { params: Promise<{ slug: string }> })
 async function StockAndCart({ product }: { product: Product }) {
     const stock = await getProductStock(product.slug);
     return <>
-            <div className="flex flex-row items-center my-4 gap-6">
-                <p className="font-bold text-2xl">Price: {formatPrice(product.price, product.currency)}</p>
-               <p className="font-bold text-2xl">Stock: {stock.stock}</p>
+            <div className="flex my-2">
+                <p className={`${stock ? 'bg-green-200' : 'bg-red-200'} flex items-center text-gray-700 px-3 py-1 rounded-full text-sm`}> 
+                   {stock ? <>In Stock: <span className="font-bold ml-1">{stock.stock}</span></> : "Out of Stock"}
+                </p>
             </div>
             <AddToCartForm productId={product.id} productName={product.name} productStock={stock} />
         </>;
@@ -86,14 +88,13 @@ async function StockAndCart({ product }: { product: Product }) {
 
 function StockAddToCartSkeleton () {
     return (
-        <div className="flex flex-row items-center my-4 gap-6 animate-pulse">
+        <div className="flex flex-col my-4 gap-4 animate-pulse">
             <div>
-                <div className="h-8 w-32 bg-gray-300 mb-3 rounded" />
                 <div className="h-8 w-24 bg-gray-300 rounded" />
             </div>
-            <div>
+            <div className="flex">
                  <div className="h-8 w-36 bg-gray-300 mb-3 rounded" />
-                <div className="h-8 w-16 bg-gray-300 rounded" />
+                <div className="h-8 w-16 bg-gray-300 rounded ml-3" />
             </div>
            
         </div>
